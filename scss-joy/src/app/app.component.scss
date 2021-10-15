@@ -1,7 +1,10 @@
 
 @use "sass:color";
 $primary-color: #6b717f;
-$dimensions: 60px;
+$dimensions: 80px;
+$lightGreen: #209439;
+$base-color: #036;
+
 .button {
 
   color: $primary-color;
@@ -10,6 +13,36 @@ $dimensions: 60px;
 
 h1 {
   border: 1px solid color.scale($primary-color, $lightness: 100%);
+}
+
+@mixin avatar($size, $circle: false) {
+  width: $size;
+  height: $size;
+  background-color: $base-color;
+
+  @if $circle {
+    border-radius: $size / 2;
+  }
+}
+
+.square-av {
+  @include avatar(100px, $circle: false);
+}
+.circle-av {
+  @include avatar(100px, $circle: true);
+}
+
+@mixin customparagraph($font-size: 12px, $padding: 5px) {
+
+  font-size: $font-size;
+  padding: $padding;
+  color: $lightGreen;
+}
+
+@for $i from 1 through 3 {
+  ul:nth-child(3n + #{$i}) {
+    background-color: lighten($base-color, $i * 5%);
+  }
 }
 
 
@@ -34,6 +67,12 @@ h1 {
   align-items: center;
   align-content: center;
   flex-direction: column;
+  place-content: center;
+}
+
+@mixin flex-row-end {
+  display: flex;
+  align-items: flex-end;
   place-content: center;
 }
 
@@ -65,6 +104,27 @@ h1 {
   }
 }
 
+@mixin shape-generator($name: circle) {
+
+  @if $name == circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    background-color: green;
+  } @else if $name == triangle {
+    width: 0px;
+    height: 0px;
+    border-top: 30px solid transparent;
+    border-bottom: 30px solid green;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+  } @else if $name == square {
+    width: 60px;
+    height: 60px;
+    background-color: green;
+  }
+}
+
 nav ul {
   @include horizontal-list;
 
@@ -78,6 +138,39 @@ nav ul {
 .sq2 {
   @include redSquare(blue,30px);
   @include fade-animation();
+  @include flex-row-end();
 }
 
+.sq3 {
+  @include redSquare(green, 10px);
+}
+
+.paragraph-container {
+  p {
+    @include customparagraph();
+  }
+
+  .test {
+    @include customparagraph(18px);
+  }
+}
+
+.circle-example {
+  @include shape-generator();
+}
+
+.square-example {
+  @include shape-generator(square);
+}
+
+.triangle-example {
+  @include shape-generator(triangle);
+}
+
+
+.whatever-container {
+  .square-example {
+    @include fade-animation();
+  }
+}
 
