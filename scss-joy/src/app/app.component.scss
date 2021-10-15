@@ -1,0 +1,83 @@
+
+@use "sass:color";
+$primary-color: #6b717f;
+$dimensions: 60px;
+.button {
+
+  color: $primary-color;
+  border: 1px solid color.scale($primary-color, $lightness: 20%);
+}
+
+h1 {
+  border: 1px solid color.scale($primary-color, $lightness: 100%);
+}
+
+
+@mixin fade-animation($duration: 2s, $delay: 0s, $iteration: 1) {
+
+  animation: fade-in $duration $delay $iteration;
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+}
+
+@mixin flex-column {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  place-content: center;
+}
+
+
+@mixin reset-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: red;
+}
+
+@mixin redSquare($color: red, $border-radius: 0px) {
+  width: $dimensions;
+  height: $dimensions;
+  background-color: $color;
+  margin: 20px;
+  border-radius: $border-radius;
+}
+
+@mixin horizontal-list {
+  @include reset-list;
+
+  li {
+    display: inline-block;
+    margin: {
+      left: -2px;
+      right: 2em;
+    }
+  }
+}
+
+nav ul {
+  @include horizontal-list;
+
+}
+
+.sq1 {
+  @include redSquare();
+  @include fade-animation();
+  @include flex-column();
+}
+.sq2 {
+  @include redSquare(blue,30px);
+  @include fade-animation();
+}
+
+
